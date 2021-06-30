@@ -1,10 +1,10 @@
 import datetime
 import pandas as pd
 
-from ..datasource.fed_treasury_yields import TyrDS
+from ..datasource.fed_treasury_yields import Tyr_DS
 
 
-class Treasury_Yield_Task(TyrDS):
+class Treasury_Yield_Task(Tyr_DS):
     def __init__(self, TyrDS):
         self._tyrDS = TyrDS
         super().__init__(TyrDS._url)

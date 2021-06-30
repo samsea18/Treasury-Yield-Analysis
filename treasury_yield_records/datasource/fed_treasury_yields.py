@@ -2,7 +2,7 @@ from bs4 import BeautifulSoup
 import requests
 
 
-class TyrDS(object):
+class Tyr_DS(object):
     def __init__(self, url):
         self._url = url
 
