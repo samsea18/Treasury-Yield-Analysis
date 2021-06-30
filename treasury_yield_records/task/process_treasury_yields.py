@@ -4,7 +4,7 @@ import pandas as pd
 from ..datasource.fed_treasury_yields import TyrDS
 
 
-class Treasury_yield_task(TyrDS):
+class Treasury_Yield_Task(TyrDS):
     def __init__(self, TyrDS):
         self._tyrDS = TyrDS
         super().__init__(TyrDS._url)
