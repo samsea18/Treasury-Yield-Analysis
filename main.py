@@ -1,5 +1,5 @@
-from treasury_yield_records.task import Treasury_Yield_Task, Mariadb_Task
-from treasury_yield_records.datasource import Tyr_DS, Mariadb_DS
+from treasury_yield_analysis.task import Treasury_Yield_Task, Mariadb_Task
+from treasury_yield_analysis.datasource import Tyr_DS, Mariadb_DS
 
 
 treasury_yield_ds = Tyr_DS("https://www.treasury.gov/resource-center/data-chart-center/interest-rates/Pages/TextView.aspx?")
