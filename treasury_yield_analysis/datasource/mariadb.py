@@ -49,8 +49,16 @@ class Mariadb_DS(object):
     def insert_treasury_records(self, var_string, tyr_list):
 
         for records in tyr_list:
-            print(records)
             query_string = 'INSERT INTO test_rates VALUES (%s);' % var_string
+            self._cur.execute(query_string, records)
+
+        self._conn.commit()
+        self._conn.close()
+
+    def insert_us_gdp_records(self, var_string, us_gdp_list):
+
+        for records in us_gdp_list:
+            query_string = 'INSERT INTO test_gdp VALUES (%s);' % var_string
             self._cur.execute(query_string, records)
 
         self._conn.commit()

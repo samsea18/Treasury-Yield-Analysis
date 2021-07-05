@@ -11,4 +11,7 @@ class Mariadb_Task(Mariadb_DS):
 
         self.insert_treasury_records(var_string, tyr_list)
 
+    def insert_us_q_gdp(self, us_gdp_list):
+        var_string = ', '.join('?' * len(us_gdp_list[0]))
 
+        self.insert_us_gdp_records(var_string, us_gdp_list)
