@@ -13,3 +13,4 @@ mariadb_ds = Mariadb_DS('root', 'root', 'localhost', 'us_treasury_yield_rates')
 #mariadb_ds.insert_treasury_records(output)
 mariadb_task = Mariadb_Task(mariadb_ds)
 mariadb_task.insert_treasury_yields(output)
+

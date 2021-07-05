@@ -28,4 +28,3 @@ class Bea_DS(object):
         data_json = json.loads(response.read())
 
         return data_json
-
