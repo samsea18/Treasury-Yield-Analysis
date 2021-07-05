@@ -7,7 +7,16 @@ class Tyr_DS(object):
         self._url = url
 
     def get_row_values(self, row_data):
-        return [val.get_text() for val in row_data]
+        value_list = []
+        for record in row_data:
+            if "\n\t\t\tN/A\n\t\t" in record.get_text():
+                value = '0'
+            else:
+                value = record.get_text()
+
+            value_list.append(value)
+
+        return value_list
 
     def fetch_treasury_yields(self, year):
         if year == 'ALL':

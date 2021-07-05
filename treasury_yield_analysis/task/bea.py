@@ -4,13 +4,14 @@ locale.setlocale( locale.LC_ALL, 'en_US.UTF-8' )
 from ..datasource.bea import Bea_DS
 
 
-class Treasury_Yield_Task(Bea_DS):
+class BEA_Task(Bea_DS):
     def __init__(self, beaDS):
         self._beaDS = beaDS
         super().__init__(beaDS._url)
 
-    def _execute(self, gdp_records):
-        extracted_gdp = self.parse_bea_gdp_list(gdp_records)
+    def _execute(self, year_from, year_to):
+        raw_gdp = self._beaDS.fetch_us_q_gdp(year_from, year_to)
+        extracted_gdp = self.parse_bea_gdp_list(raw_gdp)
 
         return self.mil_to_tril(self.assign_dates(extracted_gdp))
 
