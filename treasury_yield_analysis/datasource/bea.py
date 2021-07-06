@@ -14,7 +14,7 @@ class Bea_DS(object):
         for x in range(year_from, year_to):
             year_range += (str(x) + ',')
 
-        return year_range
+        return year_range[:-1]
 
     def fetch_us_q_gdp(self, year_from, year_to):
         BEA_API_KEY = os.environ['BEA_API_KEY']
@@ -24,6 +24,7 @@ class Bea_DS(object):
                        "&LineDescription=Gross+domestic+product&Frequency=Q&Year=" \
                        + year_list + "&ResultFormat=json"
 
+        print(bea_url)
         response = urlopen(bea_url)
         data_json = json.loads(response.read())
 

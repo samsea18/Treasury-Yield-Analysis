@@ -9,8 +9,8 @@ class Tyr_DS(object):
     def get_row_values(self, row_data):
         value_list = []
         for record in row_data:
-            if "\n\t\t\tN/A\n\t\t" in record.get_text():
-                value = '0'
+            if '\n\t\t\tN/A\n\t\t' in record.get_text():
+                value = None
             else:
                 value = record.get_text()
 
