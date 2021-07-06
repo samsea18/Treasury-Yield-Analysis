@@ -49,6 +49,7 @@ class Mariadb_DS(object):
     def insert_treasury_records(self, var_string, tyr_list):
 
         for records in tyr_list:
+            print(records)
             query_string = 'INSERT INTO test_rates VALUES (%s);' % var_string
             self._cur.execute(query_string, records)
 
