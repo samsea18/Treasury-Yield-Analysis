@@ -12,8 +12,8 @@ class Yfinance_DS(object):
         return yf.download(self._ticker, start=start_date, end=end_date)
 
     def fetch_ticker_all(self, start_date, end_date):
-        metadata = self.fetch_metadata(self)
+        metadata = self.fetch_metadata()
         hist_records = self.fetch_ticker_history(start_date, end_date)
 
-        return {"info": metadata, "historicals": hist_records}
+        return {"metadata": metadata, "historicals": hist_records}
 
