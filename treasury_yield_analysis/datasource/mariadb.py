@@ -35,7 +35,6 @@ class Mariadb_DS(object):
         result = []
 
         for x in range(len(rows)):
-            # print('now it is: ' + str(x))
             single_query = []
 
             for key in rows[x].keys():
@@ -47,28 +46,22 @@ class Mariadb_DS(object):
         return result
 
     def insert_treasury_records(self, var_string, tyr_list):
-        print("inserting tyr .....................")
         for records in tyr_list:
             query_string = 'INSERT INTO test_rates VALUES (%s);' % var_string
             self._cur.execute(query_string, records)
 
         self._conn.commit()
-        #self._conn.close()
 
     def insert_us_gdp_records(self, var_string, us_gdp_list):
-        print("inserting gdp .....................")
         for records in us_gdp_list:
             query_string = 'INSERT INTO test_gdp VALUES (%s);' % var_string
             self._cur.execute(query_string, records)
 
         self._conn.commit()
-        #self._conn.close()
 
     def insert_stock_market_records(self, var_string, stock_market_list):
-        print("inserting stock market .....................")
         for records in stock_market_list:
             query_string = 'INSERT INTO us_stock_market VALUES (%s);' % var_string
             self._cur.execute(query_string, records)
 
         self._conn.commit()
-        #self._conn.close()
