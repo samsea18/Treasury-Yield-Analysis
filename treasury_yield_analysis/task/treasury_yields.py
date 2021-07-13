@@ -1,6 +1,6 @@
 import datetime
+import pandas as pd
 from statistics import mean
-
 
 from ..datasource.fed_treasury_yields import Tyr_DS
 
@@ -34,7 +34,21 @@ class Treasury_Yield_Task(Tyr_DS):
                     pct_change_val = (rec_list[x + 1] - rec_list[x]) / rec_list[x]
                     pct_change_list.append(pct_change_val * 100)
 
-            return round(mean(pct_change_list), 2)
+            return pct_change_list
+
+    def sum_changes(self, rec_list):
+        rec_list = [i for i in rec_list if i is not None]
+        pct_diff_list = []
+
+        if len(rec_list) == 0:
+            return 0
+
+        elif len(rec_list) > 0:
+            for x in range(len(rec_list) - 1):
+                val_diff = rec_list[x + 1] - rec_list[x]
+                pct_diff_list.append(val_diff)
+
+            return sum(pct_diff_list)
 
     def cvt_to_float(self, rec_list):
         float_list = []
@@ -49,6 +63,17 @@ class Treasury_Yield_Task(Tyr_DS):
 
         return float_list
 
+    def validate_records(self, rec_list):
+        test_list = [i for i in rec_list[1:13] if i is not None]
+
+        if len(test_list) > 0:
+            val = True
+        else:
+            val = False
+            print(rec_list[0])
+
+        return val
+
     def process_row_info(self, in_list):
         valMap = []
         record_list = []
@@ -61,11 +86,23 @@ class Treasury_Yield_Task(Tyr_DS):
             counter += 1
 
             if (counter % 13) == 0:
+
                 record_list[0] = datetime.datetime.strptime(record_list[0], "%m/%d/%y").strftime("%Y-%m-%d")
                 record_list[1:13] = self.cvt_to_float(record_list[1:13])
 
-                record_list.extend((self.is_desc(record_list[1:13]), self.avg_pct_change(record_list[1:13])))
-                valMap.append(record_list)
+                if self.validate_records(record_list) is True:
+                    is_desc = self.is_desc(record_list[1:13])
+                    pct_change_list = self.avg_pct_change(record_list[1:13])
+                    avg_pct = round(mean(pct_change_list), 2)
+                    avg_pct_dd = round(mean(pd.Series(pct_change_list).pct_change()), 2)
+                    total_change_movement = self.sum_changes(record_list[1:13])
+
+                    record_list.extend((is_desc, avg_pct, avg_pct_dd, total_change_movement))
+                    valMap.append(record_list)
+
+                else:
+                    pass
+
                 record_list = []
 
         return valMap
@@ -74,7 +111,6 @@ class Treasury_Yield_Task(Tyr_DS):
         if len(yield_list) == 2:
 
             combined_map = []
-            print(yield_list)
 
             for key in yield_list.keys():
                 combined_map.extend(self.process_row_info(yield_list.get(key)))
