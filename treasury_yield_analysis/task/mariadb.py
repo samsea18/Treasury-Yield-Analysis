@@ -15,3 +15,9 @@ class Mariadb_Task(Mariadb_DS):
         var_string = ', '.join('?' * len(us_gdp_list[0]))
 
         self.insert_us_gdp_records(var_string, us_gdp_list)
+
+    def insert_stock_market_performance(self, stock_market_list):
+        var_string = ', '.join('?' * len(stock_market_list[0]))
+
+        self.insert_stock_market_records(var_string, stock_market_list)
+

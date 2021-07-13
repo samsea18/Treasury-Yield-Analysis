@@ -24,7 +24,6 @@ class Bea_DS(object):
                        "&LineDescription=Gross+domestic+product&Frequency=Q&Year=" \
                        + year_list + "&ResultFormat=json"
 
-        print(bea_url)
         response = urlopen(bea_url)
         data_json = json.loads(response.read())
 

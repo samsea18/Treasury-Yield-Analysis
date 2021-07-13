@@ -1,5 +1,5 @@
-from treasury_yield_analysis.task import Treasury_Yield_Task, Mariadb_Task, BEA_Task
-from treasury_yield_analysis.datasource import Tyr_DS, Mariadb_DS, Bea_DS
+from treasury_yield_analysis.task import Treasury_Yield_Task, Mariadb_Task, BEA_Task, Yfinance_Task
+from treasury_yield_analysis.datasource import Tyr_DS, Mariadb_DS, Bea_DS, Yfinance_DS
 
 
 #treasury_yield_ds = Tyr_DS("https://www.treasury.gov/resource-center/data-chart-center/interest-rates/Pages/TextView.aspx?")
@@ -16,3 +16,7 @@ bea_gdp_obj = BEA_Task(bea_ds)
 
 bea_output = bea_gdp_obj._execute(1990, 2021)
 mariadb_task.insert_us_q_gdp(bea_output)
+
+yfinance_ds = Yfinance_DS("^GSPC")
+yfinance_obj = Yfinance_Task(yfinance_ds)
+

@@ -64,3 +64,12 @@ class Mariadb_DS(object):
 
         self._conn.commit()
         self._conn.close()
+
+    def insert_stock_market_records(self, var_string, stock_market_list):
+
+        for records in stock_market_list:
+            query_string = 'INSERT INTO us_stock_market VALUES (%s);' % var_string
+            self._cur.execute(query_string, records)
+
+        self._conn.commit()
+        self._conn.close()
