@@ -1,6 +1,7 @@
 import datetime
 import pandas as pd
 from statistics import mean
+import math
 
 from ..datasource.fed_treasury_yields import Tyr_DS
 
@@ -66,11 +67,10 @@ class Treasury_Yield_Task(Tyr_DS):
     def validate_records(self, rec_list):
         test_list = [i for i in rec_list[1:13] if i is not None]
 
-        if len(test_list) > 0:
+        if rec_list[0] != '2017-04-14' and len(test_list) > 0:
             val = True
         else:
             val = False
-            print(rec_list[0])
 
         return val
 
@@ -94,8 +94,10 @@ class Treasury_Yield_Task(Tyr_DS):
                     is_desc = self.is_desc(record_list[1:13])
                     pct_change_list = self.avg_pct_change(record_list[1:13])
                     avg_pct = round(mean(pct_change_list), 2)
-                    avg_pct_dd = round(mean(pd.Series(pct_change_list).pct_change()), 2)
-                    total_change_movement = self.sum_changes(record_list[1:13])
+
+                    cleansed_pct_dd = self.avg_pct_change(pct_change_list)
+                    avg_pct_dd = round(mean(cleansed_pct_dd), 2)
+                    total_change_movement = round(self.sum_changes(record_list[1:13]), 2)
 
                     record_list.extend((is_desc, avg_pct, avg_pct_dd, total_change_movement))
                     valMap.append(record_list)
