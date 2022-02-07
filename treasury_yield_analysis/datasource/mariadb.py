@@ -106,3 +106,21 @@ class Mariadb_DS(object):
                             'pct_change': records[14]}]
 
             self._conn.connect().execute(query, values_list)
+
+
+    def insert_us_gdp_records_sqlal(self, us_gdp_list):
+
+        metadata = sqlalchemy.MetaData()
+
+        gdp_table = sqlalchemy.Table('gdp', metadata, autoload=True, autoload_with=self._conn)
+
+        # Insert gdp into mariadb using sqlalchemy
+        for records in us_gdp_list:
+            query = sqlalchemy.insert(gdp_table)
+
+            values_list = [{'year_q': records[0],
+                            'gdp_mil': records[1],
+                            'date': records[2],
+                            'gdp_tril': records[3]}]
+
+            self._conn.connect().execute(query, values_list)
